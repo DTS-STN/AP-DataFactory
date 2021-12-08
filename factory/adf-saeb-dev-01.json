@@ -1,0 +1,15 @@
+{
+	"name": "adf-saeb-dev-01",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned,UserAssigned",
+		"principalId": "0a54e1bf-9bf8-4e6d-8dff-afaf7aa3f00b",
+		"tenantId": "9ed55846-8a81-4246-acd8-b1a01abfc0d1",
+		"userAssignedIdentities": {
+			"/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourcegroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mi_devrg_write": {
+				"clientId": "19e08a6a-78f6-4cb6-9727-2764fe6b783f",
+				"principalId": "0f63b7af-b18e-428f-a108-74582599546c"
+			}
+		}
+	}
+}

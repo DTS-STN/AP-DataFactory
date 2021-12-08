@@ -1,0 +1,33 @@
+{
+	"name": "sc_population_projections",
+	"properties": {
+		"activities": [
+			{
+				"name": "populations_projections",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Nov 29 - MVP/Curation/statscan/clean_population_projections"
+				},
+				"linkedServiceName": {
+					"referenceName": "dbw_saeb_dev_01",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "2. Curate/Statistics Canada"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-11-22T15:24:24Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

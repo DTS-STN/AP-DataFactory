@@ -1,0 +1,11 @@
+{
+	"name": "kv_saeb_dev_01",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-saeb-dev-01.vault.azure.net/"
+		}
+	}
+}

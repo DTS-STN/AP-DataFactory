@@ -1,0 +1,24 @@
+{
+	"name": "delete-azure-webjobs-hosts",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "delete_azure_webjobs_hosts",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/azure-webjobs-hosts/blobs/",
+			"ignoreEmptyBlobs": false,
+			"scope": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourceGroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.Storage/storageAccounts/stsaebdevca01",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
