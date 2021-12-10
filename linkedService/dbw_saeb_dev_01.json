@@ -1,0 +1,19 @@
+{
+	"name": "dbw_saeb_dev_01",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-374346146549270.10.azuredatabricks.net",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "kv_saeb_dev_01",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "saebdbwadftoken"
+			},
+			"existingClusterId": "1208-175124-vudctkyu"
+		}
+	}
+}
