@@ -2,15 +2,55 @@
 	"name": "oastakeup-trigger",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
-		"pipelines": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "oas_take_up",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_61818052fc9c273678be270d, s300000938_6182d45e3680840e62af6271",
+					"dimensions": "variables/evar12, variables/georegion, variables/daterangemonth",
+					"metrics": "metrics/visitors,metrics/visits",
+					"start_date": "2018-01-01",
+					"output_file_path": "oas/oas-takeup/oas_takeup_all_regions.csv"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "oas_take_up",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_61818052fc9c273678be270d, s300000938_615b634e7ee37961ec011b09",
+					"dimensions": "variables/evar12, variables/georegion, variables/daterangemonth",
+					"metrics": "metrics/visitors,metrics/visits",
+					"start_date": "2018-01-01",
+					"output_file_path": "oas/oas-takeup/oas_takeup_canada_regions.csv"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "oas_take_up",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_6182dad72e2d5e1821037711, s300000938_6182db980c4dcc660fef89f2",
+					"dimensions": "variables/clickmappage, variables/clickmaplink, variables/daterangeyear",
+					"metrics": "metrics/clickmaplinkinstances",
+					"start_date": "2018-01-01",
+					"output_file_path": "oas/oas-takeup/oas_takeup_internal_link_clicks.csv"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Minute",
-				"interval": 15,
-				"startTime": "2021-12-10T23:25:00Z",
-				"timeZone": "UTC"
+				"frequency": "Hour",
+				"interval": 2,
+				"startTime": "2021-12-10T00:00:00",
+				"timeZone": "Eastern Standard Time"
 			}
 		}
 	}
