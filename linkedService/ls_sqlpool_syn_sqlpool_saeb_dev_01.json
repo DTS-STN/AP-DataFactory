@@ -1,0 +1,15 @@
+{
+	"name": "ls_sqlpool_syn_sqlpool_saeb_dev_01",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=synw-saeb-dev-01.sql.azuresynapse.net;Initial Catalog=syn_sqlpool_saeb_dev_01",
+			"credential": {
+				"referenceName": "cr_adf",
+				"type": "CredentialReference"
+			}
+		}
+	}
+}
