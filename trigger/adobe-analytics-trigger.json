@@ -1,0 +1,17 @@
+{
+	"name": "adobe-analytics-trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2021-12-10T21:33:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
