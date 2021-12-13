@@ -1,5 +1,5 @@
 {
-	"name": "oas_take_up_trigger",
+	"name": "oastakeup_trigger",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Stopped",
