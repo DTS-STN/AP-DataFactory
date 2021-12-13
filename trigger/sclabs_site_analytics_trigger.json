@@ -1,5 +1,5 @@
 {
-	"name": "sclabs-site-analytics-trigger",
+	"name": "sclabs_site_analytics_trigger",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
