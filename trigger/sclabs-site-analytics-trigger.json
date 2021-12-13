@@ -2,15 +2,29 @@
 	"name": "sclabs-site-analytics-trigger",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
-		"pipelines": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "sclabs_site_analytics",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff",
+					"dimensions": "variables/daterangeday, variables/evar5, variables/evar4, variables/georegion",
+					"metrics": "metrics/visits",
+					"output_directory": "sclabs-site-analytics/",
+					"output_filename": "ds_adls_stsaebdevca01_csv_Fact_Visits_By_DeviceType"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Minute",
-				"interval": 15,
-				"startTime": "2021-12-13T21:44:00Z",
-				"timeZone": "UTC"
+				"frequency": "Hour",
+				"interval": 2,
+				"startTime": "2021-12-10T00:00:00",
+				"timeZone": "Eastern Standard Time"
 			}
 		}
 	}
