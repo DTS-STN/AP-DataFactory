@@ -1,5 +1,5 @@
 {
-	"name": "oastakeup_trigger",
+	"name": "oastakeup-trigger",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Stopped",
