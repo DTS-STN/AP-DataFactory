@@ -1,0 +1,17 @@
+{
+	"name": "oas_take_up_trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2021-12-13T20:45:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
