@@ -16,6 +16,84 @@
 					"output_directory": "sclabs-site-analytics/",
 					"output_filename": "ds_adls_stsaebdevca01_csv_Fact_Visits_By_DeviceType"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "sclabs_site_analytics",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff",
+					"dimensions": "variables/daterangeday, variables/evar5, variables/georegion",
+					"metrics": "metrics/visits",
+					"output_directory": "sclabs-site-analytics/",
+					"output_filename": "ds_adls_stsaebdevca01_csv_Fact_Visits_By_Region"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "sclabs_site_analytics",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff",
+					"dimensions": "variables/daterangeday, variables/evar5, variables/referrertype, variables/georegion",
+					"metrics": "metrics/visits",
+					"output_directory": "sclabs-site-analytics/",
+					"output_filename": "ds_adls_stsaebdevca01_csv_Fact_Visits_By_RefererType"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "sclabs_site_analytics",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff, s300000938_61b7a9029b37092ca384b477",
+					"dimensions": "variables/daterangeday, variables/evar5, variables/evar12, variables/georegion",
+					"metrics": "metrics/visits",
+					"output_directory": "sclabs-site-analytics/",
+					"output_filename": "ds_adls_stsaebdevca01_csv_Fact_Unsubscribers"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "sclabs_site_analytics",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff, s300000938_616db7a9910209746265973b",
+					"dimensions": "variables/daterangeday, variables/evar5, variables/evar6.3, variables/georegion",
+					"metrics": "metrics/visits",
+					"output_directory": "sclabs-site-analytics/",
+					"output_filename": "ds_adls_stsaebdevca01_csv_Fact_Visits_By_TrafficType"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "sclabs_site_analytics",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff",
+					"dimensions": "variables/daterangeday, variables/evar5, variables/georegion",
+					"metrics": "metrics/visits",
+					"output_directory": "sclabs-site-analytics/",
+					"output_filename": "ds_adls_stsaebdevca01_csv_Fact_Visits_By_Language"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "sclabs_site_analytics",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"segments": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff, s300000938_61a91e4c8626233f6d4a356c, s300000938_616db7a9910209746265973b",
+					"dimensions": "metrics/averagetimespentonsite, variables/daterangeday, variables/evar11, variables/georegion, variables/evar5",
+					"metrics": "metrics/visits",
+					"output_directory": "sclabs-site-analytics/",
+					"output_filename": "ds_adls_stsaebdevca01_csv_Fact_Metrics_By_FRHomePage"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
