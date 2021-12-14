@@ -1,0 +1,139 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-saeb-dev-01"
+		},
+		"ls_adls_stasaebdevca01_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_adls_stasaebdevca01'"
+		},
+		"ls_sqlpool_syn_sqlpool_saeb_dev_01_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_sqlpool_syn_sqlpool_saeb_dev_01'"
+		},
+		"kv_saeb_dev_01_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-saeb-dev-01.vault.azure.net/"
+		},
+		"ls_adls_stasaebdevca01_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://stsaebdevca01.dfs.core.windows.net/"
+		},
+		"delete-azure-webjobs-hosts_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourceGroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.Storage/storageAccounts/stsaebdevca01"
+		},
+		"delete-azure-webjobs-secrets_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourceGroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.Storage/storageAccounts/stsaebdevca01"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_segments": {
+			"type": "string",
+			"defaultValue": "s300000938_6182dad72e2d5e1821037711, s300000938_6182db980c4dcc660fef89f2"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_dimensions": {
+			"type": "string",
+			"defaultValue": "variables/clickmappage, variables/clickmaplink, variables/daterangeyear"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_metrics": {
+			"type": "string",
+			"defaultValue": "metrics/clickmaplinkinstances"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_start_date": {
+			"type": "string",
+			"defaultValue": "2018-01-01"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path": {
+			"type": "string",
+			"defaultValue": "oas/oas-takeup/oas_takeup_internal_link_clicks.csv"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-saeb-dev-01_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ls_adls_stasaebdevca01_accountKey": {
+						"value": "[parameters('ls_adls_stasaebdevca01_accountKey')]"
+					},
+					"ls_sqlpool_syn_sqlpool_saeb_dev_01_connectionString": {
+						"value": "[parameters('ls_sqlpool_syn_sqlpool_saeb_dev_01_connectionString')]"
+					},
+					"kv_saeb_dev_01_properties_typeProperties_baseUrl": {
+						"value": "[parameters('kv_saeb_dev_01_properties_typeProperties_baseUrl')]"
+					},
+					"ls_adls_stasaebdevca01_properties_typeProperties_url": {
+						"value": "[parameters('ls_adls_stasaebdevca01_properties_typeProperties_url')]"
+					},
+					"delete-azure-webjobs-hosts_properties_typeProperties_scope": {
+						"value": "[parameters('delete-azure-webjobs-hosts_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "adf-saeb-dev-01_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"delete-azure-webjobs-secrets_properties_typeProperties_scope": {
+						"value": "[parameters('delete-azure-webjobs-secrets_properties_typeProperties_scope')]"
+					},
+					"oas_take_up_trigger_properties_oas_take_up_parameters_segments": {
+						"value": "[parameters('oas_take_up_trigger_properties_oas_take_up_parameters_segments')]"
+					},
+					"oas_take_up_trigger_properties_oas_take_up_parameters_dimensions": {
+						"value": "[parameters('oas_take_up_trigger_properties_oas_take_up_parameters_dimensions')]"
+					},
+					"oas_take_up_trigger_properties_oas_take_up_parameters_metrics": {
+						"value": "[parameters('oas_take_up_trigger_properties_oas_take_up_parameters_metrics')]"
+					},
+					"oas_take_up_trigger_properties_oas_take_up_parameters_start_date": {
+						"value": "[parameters('oas_take_up_trigger_properties_oas_take_up_parameters_start_date')]"
+					},
+					"oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path": {
+						"value": "[parameters('oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-saeb-dev-01_ArmTemplate_0')]"
+			]
+		}
+	]
+}

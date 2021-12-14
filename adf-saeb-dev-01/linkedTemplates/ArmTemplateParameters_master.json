@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-saeb-dev-01"
+		},
+		"ls_adls_stasaebdevca01_accountKey": {
+			"value": ""
+		},
+		"ls_sqlpool_syn_sqlpool_saeb_dev_01_connectionString": {
+			"value": ""
+		},
+		"kv_saeb_dev_01_properties_typeProperties_baseUrl": {
+			"value": "https://kv-saeb-dev-01.vault.azure.net/"
+		},
+		"ls_adls_stasaebdevca01_properties_typeProperties_url": {
+			"value": "https://stsaebdevca01.dfs.core.windows.net/"
+		},
+		"delete-azure-webjobs-hosts_properties_typeProperties_scope": {
+			"value": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourceGroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.Storage/storageAccounts/stsaebdevca01"
+		},
+		"delete-azure-webjobs-secrets_properties_typeProperties_scope": {
+			"value": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourceGroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.Storage/storageAccounts/stsaebdevca01"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_segments": {
+			"value": "s300000938_6182dad72e2d5e1821037711, s300000938_6182db980c4dcc660fef89f2"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_dimensions": {
+			"value": "variables/clickmappage, variables/clickmaplink, variables/daterangeyear"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_metrics": {
+			"value": "metrics/clickmaplinkinstances"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_start_date": {
+			"value": "2018-01-01"
+		},
+		"oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path": {
+			"value": "oas/oas-takeup/oas_takeup_internal_link_clicks.csv"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
