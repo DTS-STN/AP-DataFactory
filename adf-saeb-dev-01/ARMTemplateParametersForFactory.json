@@ -37,6 +37,21 @@
 		},
 		"oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path": {
 			"value": "oas/oas-takeup/oas_takeup_internal_link_clicks.csv"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments": {
+			"value": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff, s300000938_61a91e4c8626233f6d4a356c, s300000938_616db7a9910209746265973b"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions": {
+			"value": "metrics/averagetimespentonsite, variables/daterangeday, variables/evar11, variables/georegion, variables/evar5"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics": {
+			"value": "metrics/visits"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory": {
+			"value": "sclabs-site-analytics/"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename": {
+			"value": "ds_adls_stsaebdevca01_csv_Fact_Metrics_By_FRHomePage"
 		}
 	}
 }

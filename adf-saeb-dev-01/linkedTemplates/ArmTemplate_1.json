@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-saeb-dev-01"
 		},
+		"delete-azure-webjobs-hosts_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourceGroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.Storage/storageAccounts/stsaebdevca01"
+		},
 		"delete-azure-webjobs-secrets_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourceGroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.Storage/storageAccounts/stsaebdevca01"
@@ -30,12 +34,60 @@
 		"oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path": {
 			"type": "string",
 			"defaultValue": "oas/oas-takeup/oas_takeup_internal_link_clicks.csv"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments": {
+			"type": "string",
+			"defaultValue": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff, s300000938_61a91e4c8626233f6d4a356c, s300000938_616db7a9910209746265973b"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions": {
+			"type": "string",
+			"defaultValue": "metrics/averagetimespentonsite, variables/daterangeday, variables/evar11, variables/georegion, variables/evar5"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics": {
+			"type": "string",
+			"defaultValue": "metrics/visits"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory": {
+			"type": "string",
+			"defaultValue": "sclabs-site-analytics/"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename": {
+			"type": "string",
+			"defaultValue": "ds_adls_stsaebdevca01_csv_Fact_Metrics_By_FRHomePage"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/delete-azure-webjobs-hosts')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "delete_azure_webjobs_hosts",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/azure-webjobs-hosts/blobs/",
+					"ignoreEmptyBlobs": false,
+					"scope": "[parameters('delete-azure-webjobs-hosts_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/delete-azure-webjobs-secrets')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
@@ -109,6 +161,118 @@
 							"metrics": "[parameters('oas_take_up_trigger_properties_oas_take_up_parameters_metrics')]",
 							"start_date": "[parameters('oas_take_up_trigger_properties_oas_take_up_parameters_start_date')]",
 							"output_file_path": "[parameters('oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 2,
+						"startTime": "2021-12-10T00:00:00",
+						"timeZone": "Eastern Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sclabs_site_analytics_trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
 						}
 					}
 				],

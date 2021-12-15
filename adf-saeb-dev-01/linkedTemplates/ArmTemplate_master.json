@@ -51,6 +51,26 @@
 			"type": "string",
 			"defaultValue": "oas/oas-takeup/oas_takeup_internal_link_clicks.csv"
 		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments": {
+			"type": "string",
+			"defaultValue": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff, s300000938_61a91e4c8626233f6d4a356c, s300000938_616db7a9910209746265973b"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions": {
+			"type": "string",
+			"defaultValue": "metrics/averagetimespentonsite, variables/daterangeday, variables/evar11, variables/georegion, variables/evar5"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics": {
+			"type": "string",
+			"defaultValue": "metrics/visits"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory": {
+			"type": "string",
+			"defaultValue": "sclabs-site-analytics/"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename": {
+			"type": "string",
+			"defaultValue": "ds_adls_stsaebdevca01_csv_Fact_Metrics_By_FRHomePage"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -89,9 +109,6 @@
 					},
 					"ls_adls_stasaebdevca01_properties_typeProperties_url": {
 						"value": "[parameters('ls_adls_stasaebdevca01_properties_typeProperties_url')]"
-					},
-					"delete-azure-webjobs-hosts_properties_typeProperties_scope": {
-						"value": "[parameters('delete-azure-webjobs-hosts_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -111,6 +128,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"delete-azure-webjobs-hosts_properties_typeProperties_scope": {
+						"value": "[parameters('delete-azure-webjobs-hosts_properties_typeProperties_scope')]"
+					},
 					"delete-azure-webjobs-secrets_properties_typeProperties_scope": {
 						"value": "[parameters('delete-azure-webjobs-secrets_properties_typeProperties_scope')]"
 					},
@@ -128,6 +148,21 @@
 					},
 					"oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path": {
 						"value": "[parameters('oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path')]"
+					},
+					"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments": {
+						"value": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]"
+					},
+					"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions": {
+						"value": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]"
+					},
+					"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics": {
+						"value": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]"
+					},
+					"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory": {
+						"value": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]"
+					},
+					"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename": {
+						"value": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
 					}
 				}
 			},

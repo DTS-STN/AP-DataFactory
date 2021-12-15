@@ -50,6 +50,26 @@
 		"oas_take_up_trigger_properties_oas_take_up_parameters_output_file_path": {
 			"type": "string",
 			"defaultValue": "oas/oas-takeup/oas_takeup_internal_link_clicks.csv"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments": {
+			"type": "string",
+			"defaultValue": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff, s300000938_61a91e4c8626233f6d4a356c, s300000938_616db7a9910209746265973b"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions": {
+			"type": "string",
+			"defaultValue": "metrics/averagetimespentonsite, variables/daterangeday, variables/evar11, variables/georegion, variables/evar5"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics": {
+			"type": "string",
+			"defaultValue": "metrics/visits"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory": {
+			"type": "string",
+			"defaultValue": "sclabs-site-analytics/"
+		},
+		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename": {
+			"type": "string",
+			"defaultValue": "ds_adls_stsaebdevca01_csv_Fact_Metrics_By_FRHomePage"
 		}
 	},
 	"variables": {
@@ -877,6 +897,106 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/sclabs_site_analytics')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Ingest SCLabs Site Analytics Data",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Set Output File Path",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Nov 29 - MVP/Ingestion/Adobe Analytics/AA Ingestion Script",
+							"baseParameters": {
+								"dimensions": {
+									"value": "@pipeline().parameters.dimensions",
+									"type": "Expression"
+								},
+								"metrics": {
+									"value": "@pipeline().parameters.metrics",
+									"type": "Expression"
+								},
+								"segments": {
+									"value": "@pipeline().parameters.segments",
+									"type": "Expression"
+								},
+								"output_file_path": {
+									"value": "@variables('output_file_path')",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "dbw_saeb_dev_01",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Set Output File Path",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "output_file_path",
+							"value": {
+								"value": "@concat(pipeline().parameters.output_directory, pipeline().parameters.output_filename, formatDateTime(convertTimeZone(utcnow(),'UTC','Eastern Standard Time'),'yyyyMM'), '.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"segments": {
+						"type": "string"
+					},
+					"dimensions": {
+						"type": "string"
+					},
+					"metrics": {
+						"type": "string"
+					},
+					"output_directory": {
+						"type": "string"
+					},
+					"output_filename": {
+						"type": "string"
+					}
+				},
+				"variables": {
+					"output_file_path": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "1. Ingest/Adobe Analytics"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dbw_saeb_dev_01')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/azure_webjobs_hosts')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1113,6 +1233,120 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/oas_take_up')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sclabs_site_analytics_trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "sclabs_site_analytics",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"segments": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments')]",
+							"dimensions": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions')]",
+							"metrics": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics')]",
+							"output_directory": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory')]",
+							"output_filename": "[parameters('sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_filename')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 2,
+						"startTime": "2021-12-10T00:00:00",
+						"timeZone": "Eastern Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/sclabs_site_analytics')]"
 			]
 		},
 		{
