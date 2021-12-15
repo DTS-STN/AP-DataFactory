@@ -1,9 +1,9 @@
 {
-	"name": "oas_take_up",
+	"name": "oas_take_up_canada_regions",
 	"properties": {
 		"activities": [
 			{
-				"name": "Ingest OAS Take Up Data",
+				"name": "Ingest OAS Take Up for Canada Regions",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -71,19 +71,24 @@
 		],
 		"parameters": {
 			"segments": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "s300000938_61818052fc9c273678be270d, s300000938_615b634e7ee37961ec011b09"
 			},
 			"dimensions": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "variables/evar12, variables/georegion, variables/daterangemonth"
 			},
 			"metrics": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "metrics/visitors,metrics/visits"
 			},
 			"start_date": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "2018-01-01"
 			},
 			"output_file_path": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "oas/oas-takeup/oas_takeup_canada_regions.csv"
 			}
 		},
 		"variables": {
@@ -95,7 +100,7 @@
 			"name": "1. Ingest/Adobe Analytics"
 		},
 		"annotations": [],
-		"lastPublishTime": "2021-12-15T17:42:45Z"
+		"lastPublishTime": "2021-11-15T16:01:44Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

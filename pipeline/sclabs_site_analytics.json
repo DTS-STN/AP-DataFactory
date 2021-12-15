@@ -86,6 +86,8 @@
 		"folder": {
 			"name": "1. Ingest/Adobe Analytics"
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2021-12-15T17:42:45Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }
