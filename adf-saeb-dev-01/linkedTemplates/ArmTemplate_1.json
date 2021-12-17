@@ -41,11 +41,11 @@
 		},
 		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions": {
 			"type": "string",
-			"defaultValue": "metrics/averagetimespentonsite, variables/daterangeday, variables/evar11, variables/georegion, variables/evar5"
+			"defaultValue": "variables/daterangeday, variables/evar11, variables/georegion, variables/evar5"
 		},
 		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_metrics": {
 			"type": "string",
-			"defaultValue": "metrics/visits"
+			"defaultValue": "metrics/visits, metrics/averagetimespentonsite"
 		},
 		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_output_directory": {
 			"type": "string",
