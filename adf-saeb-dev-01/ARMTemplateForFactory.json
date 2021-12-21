@@ -53,7 +53,7 @@
 		},
 		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_segments": {
 			"type": "string",
-			"defaultValue": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff, s300000938_61a91e4c8626233f6d4a356c, s300000938_616db7a9910209746265973b"
+			"defaultValue": "s300000938_615b634e7ee37961ec011b09, s300000938_615c57f83207242d005be13c, s300000938_60d228c474f05e635fba03ff, s300000938_61a91e4c8626233f6d4a356c"
 		},
 		"sclabs_site_analytics_trigger_properties_sclabs_site_analytics_parameters_dimensions": {
 			"type": "string",
