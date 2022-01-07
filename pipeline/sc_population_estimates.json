@@ -1,0 +1,33 @@
+{
+	"name": "sc_population_estimates",
+	"properties": {
+		"activities": [
+			{
+				"name": "population_estimates",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Impact Measurement Dashboards/Curation/statscan/clean_population_estimates"
+				},
+				"linkedServiceName": {
+					"referenceName": "dbw_saeb_dev_01",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "2. Curate/Statistics Canada"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-12-15T17:42:45Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
