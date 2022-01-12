@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "population_estimates",
+				"name": "clean_population_estimates",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -16,6 +16,33 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": "/Impact Measurement Dashboards/Curation/statscan/clean_population_estimates"
+				},
+				"linkedServiceName": {
+					"referenceName": "dbw_saeb_dev_01",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "annual_population_estimates",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "clean_population_estimates",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Nov 29 - MVP/Curation/statscan/annual_population_estimates"
 				},
 				"linkedServiceName": {
 					"referenceName": "dbw_saeb_dev_01",
