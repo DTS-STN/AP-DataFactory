@@ -194,6 +194,171 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Population_Estimates_Data')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get_Pop_Est_Data",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Store_Password",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://logic-saeb-dev-01.azurewebsites.net:443/api/statscan-to-azure/triggers/manual/invoke?api-version=2020-05-01-preview&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=us83VUS_wItMDKUgPV-Ssc_54emzMaQx1OAxhoSAy9U",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"username": "@variables('username')",
+								"password": "@variables('password')",
+								"uri": "@variables('uri')",
+								"destinationpath": "@variables('destinationpath')"
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.azure.com"
+							}
+						}
+					},
+					{
+						"name": "Fetch_Username",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://kv-saeb-dev-01.vault.azure.net/secrets/statscan-username/305f38e63a2445059be325e30f1694d9?api-version=7.0",
+							"method": "GET",
+							"headers": {},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
+						}
+					},
+					{
+						"name": "Fetch_Password",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Store_Username",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://kv-saeb-dev-01.vault.azure.net/secrets/statscan-password/face7016b661419f95cb8619266f2313?api-version=7.0",
+							"method": "GET",
+							"headers": {},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
+						}
+					},
+					{
+						"name": "Store_Username",
+						"description": "@activity('Fetch_Username').output.value",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Fetch_Username",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "username",
+							"value": {
+								"value": "@activity('Fetch_Username').output.value",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Store_Password",
+						"description": "@activity('Fetch_Password').output.value",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Fetch_Password",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "password",
+							"value": {
+								"value": "@activity('Fetch_Password').output.value",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"username": {
+						"type": "String"
+					},
+					"password": {
+						"type": "String"
+					},
+					"uri": {
+						"type": "String",
+						"defaultValue": "https://www150.statcan.gc.ca/t1/wds/rest/getFullTableDownloadCSV/17100005/en"
+					},
+					"destinationpath": {
+						"type": "String",
+						"defaultValue": "/statscan/population-estimates/input/"
+					}
+				},
+				"folder": {
+					"name": "1. Ingest/Statistics Canada"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-12-15T17:42:44Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Population_Projections_Data')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -937,13 +1102,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sc_population_projections')]",
+			"name": "[concat(parameters('factoryName'), '/sc_population_estimates')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "populations_projections",
+						"name": "population_estimates",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -955,7 +1120,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Nov 29 - MVP/Curation/statscan/clean_population_projections"
+							"notebookPath": "/Impact Measurement Dashboards/Curation/statscan/clean_population_estimates"
 						},
 						"linkedServiceName": {
 							"referenceName": "dbw_saeb_dev_01",
@@ -969,107 +1134,6 @@
 				},
 				"folder": {
 					"name": "2. Curate/Statistics Canada"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-12-15T17:42:45Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/dbw_saeb_dev_01')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sclabs_site_analytics')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Ingest SCLabs Site Analytics Data",
-						"type": "DatabricksNotebook",
-						"dependsOn": [
-							{
-								"activity": "Set Output File Path",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Nov 29 - MVP/Ingestion/Adobe Analytics/AA Ingestion Script",
-							"baseParameters": {
-								"dimensions": {
-									"value": "@pipeline().parameters.dimensions",
-									"type": "Expression"
-								},
-								"metrics": {
-									"value": "@pipeline().parameters.metrics",
-									"type": "Expression"
-								},
-								"segments": {
-									"value": "@pipeline().parameters.segments",
-									"type": "Expression"
-								},
-								"output_file_path": {
-									"value": "@variables('output_file_path')",
-									"type": "Expression"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "dbw_saeb_dev_01",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Set Output File Path",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "output_file_path",
-							"value": {
-								"value": "@concat(pipeline().parameters.output_directory, pipeline().parameters.output_filename, formatDateTime(convertTimeZone(utcnow(),'UTC','Eastern Standard Time'),'yyyyMM'), '.csv')",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"segments": {
-						"type": "string"
-					},
-					"dimensions": {
-						"type": "string"
-					},
-					"metrics": {
-						"type": "string"
-					},
-					"output_directory": {
-						"type": "string"
-					},
-					"output_filename": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"output_file_path": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "1. Ingest/Adobe Analytics"
 				},
 				"annotations": [],
 				"lastPublishTime": "2021-12-15T17:42:45Z"
