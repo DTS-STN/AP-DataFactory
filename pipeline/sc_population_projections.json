@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Nov 29 - MVP/Curation/statscan/clean_population_projections"
+					"notebookPath": "/Repos/Dev/AP-Databricks/notebooks/Nov 29 - MVP/Curation/statscan/clean_population_projections"
 				},
 				"linkedServiceName": {
 					"referenceName": "dbw_saeb_dev_01",

@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Nov 29 - MVP/Curation/adobe_analytics/clean_oas_takeup_internal_link_clicks"
+					"notebookPath": "/Repos/Dev/AP-Databricks/notebooks/Nov 29 - MVP/Curation/adobe_analytics/clean_oas_takeup_internal_link_clicks"
 				},
 				"linkedServiceName": {
 					"referenceName": "dbw_saeb_dev_01",
