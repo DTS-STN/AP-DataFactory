@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Nov 29 - MVP/Curation/esdc_open_data/clean_new_benefits_province_type"
+					"notebookPath": "/Repos/Dev/AP-Databricks/notebooks/Nov 29 - MVP/Curation/esdc_open_data/clean_new_benefits_province_type"
 				},
 				"linkedServiceName": {
 					"referenceName": "dbw_saeb_dev_01",
