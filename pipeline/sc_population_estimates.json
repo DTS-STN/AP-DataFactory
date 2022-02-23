@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Nov 29 - MVP/Curation/statscan/annual_population_estimates"
+					"notebookPath": "/Repos/Dev/AP-Databricks/notebooks/Impact Measurement Dashboards/Curation/statscan/clean_population_estimates"
 				},
 				"linkedServiceName": {
 					"referenceName": "dbw_saeb_dev_01",

@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Nov 29 - MVP/Curation/esdc_open_data/clean_oas_recipients_age_gender"
+					"notebookPath": "/Repos/Dev/AP-Databricks/notebooks/Nov 29 - MVP/Curation/esdc_open_data/clean_oas_recipients_age_gender"
 				},
 				"linkedServiceName": {
 					"referenceName": "dbw_saeb_dev_01",
