@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "population_estimates",
+				"name": "annual_population_estimates",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
